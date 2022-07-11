@@ -1,7 +1,9 @@
 " esc in insert & visual mode
 imap kj <esc>
 
-set backup
+" Settings
+set nobackup
+set nohlsearch
 set clipboard+=unnamedplus
 set undofile
 set undodir=~/.vim/undodir
@@ -18,3 +20,15 @@ set scrolloff=5
 set updatetime=50
 syntax enable
 colorscheme gruvbox
+
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+call plug#end()
+
+" Remappings
+nnoremap <c-p> :Files<cr>
+nnoremap <c-f> :Ag<cr>
