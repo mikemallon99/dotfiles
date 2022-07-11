@@ -1,2 +1,8 @@
-alias config='/usr/bin/git --git-dir=/home/mmallon/.cfg/ --work-tree=/home/mmallon'
 alias vi=nvim
+
+if [ -d "$HOME/.cfg/.git" ]
+then
+    alias config='/usr/bin/git --git-dir=$HOME/.cfg/.git --work-tree=$HOME'
+else
+    alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+fi

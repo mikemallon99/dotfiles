@@ -17,3 +17,4 @@ set guicursor=
 set scrolloff=5
 set updatetime=50
 syntax enable
+colorscheme gruvbox
