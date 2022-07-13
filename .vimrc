@@ -18,6 +18,7 @@ set expandtab
 set guicursor=
 set scrolloff=5
 set updatetime=50
+set winheight=34
 syntax enable
 colorscheme gruvbox
 
@@ -32,3 +33,5 @@ call plug#end()
 " Remappings
 nnoremap <c-p> :Files<cr>
 nnoremap <c-f> :Ag<cr>
+nnoremap <c-E> 5<c-E>
+nnoremap <c-Y> 5<c-Y>
