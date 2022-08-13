@@ -1,6 +1,3 @@
-" esc in insert & visual mode
-imap kj <esc>
-
 " Settings
 set nobackup
 set nohlsearch
@@ -40,6 +37,12 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap-python'
+
 call plug#end()
 
 " Remappings
@@ -58,7 +61,18 @@ nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
+nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+
 lua << EOF
+vim.lsp.set_log_level("debug")
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
@@ -134,7 +148,39 @@ cmp.setup.cmdline(':', {
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require'lspconfig'.pyright.setup {
+require('lspconfig')['pyright'].setup({
     capabilities = capabilities
+})
+require('lspconfig')['rust_analyzer'].setup({
+    capabilities = capabilities
+})
+
+local dap = require('dap')
+dap.adapters.python = {
+  type = 'server';
+  port = 3000;
+  args = { '-m', 'debugpy.adapter' };
 }
+
+dap.configurations.python = {
+    {
+        name = "Python: Attach (windows-x86_64/linux-x86_64)";
+        type = "python";
+        request = "attach";
+        localRoot = "${workspaceFolder}";
+        remoteRoot = "${workspaceFolder}";
+        port = 3000;
+        host = "localhost";
+        runtimeArgs = {
+            "--preserve-symlinks",
+            "--preserve-symlinks-main"
+        };
+        presentation = {
+            hidden = false;
+            group = "Attach";
+            order = 1
+        };
+    },
+}
+
 EOF

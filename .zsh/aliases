@@ -6,3 +6,19 @@ then
 else
     alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 fi
+
+# Omni aliases
+alias editor="bash ~/nvidia/drivesim-ov/_build/linux-x86_64/release/omni.drivesim.editor.app.sh"
+alias props="bash ~/nvidia/drivesim-ov/_build/linux-x86_64/release/omni.drivesim.studio.props.sh"
+alias vehicles="bash ~/nvidia/drivesim-ov/_build/linux-x86_64/release/omni.drivesim.studio.vehicles.sh"
+alias e2e="bash ~/nvidia/drivesim-ov/_build/linux-x86_64/release/omni.drivesim.e2e.sh"
+alias kit="exec ~/nvidia/drivesim-ov/_build/target-deps/kit_sdk_release/kit"
+
+# Vpn
+alias vpn="~/Downloads/anyconnect-linux64-4.10.05095/vpn/vpnui"
+
+# P4V
+alias p4v="~/Downloads/p4v-2022.2.2304646/bin/p4v"
+
+alias validate="kit --/log/level=info --no-window --enable omni.drivesim.content_scripts-1.0.0 --enable omni.kit.loop --enable omni.kit.async_engine --/app/content/emptyStageOnStart=false --exec $DS_ROOT/_build/linux-x86_64/release/exts/omni.drivesim.content_scripts/scripts/validate.py"
+
